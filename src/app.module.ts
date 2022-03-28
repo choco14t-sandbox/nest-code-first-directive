@@ -1,5 +1,3 @@
-import { join } from 'path';
-
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import {
@@ -13,8 +11,7 @@ import { RecipesModule } from './recipes/recipes.module';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
-      autoSchemaFile: join(process.cwd(), 'src/schema.graphql'),
-      sortSchema: true,
+      typePaths: ['./**/*.graphql'],
       driver: ApolloFederationDriver,
       plugins: [responseCachePlugin()],
     }),
