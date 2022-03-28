@@ -7,13 +7,6 @@ import {
   ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import responseCachePlugin from 'apollo-server-plugin-response-cache';
-import {
-  DirectiveLocation,
-  GraphQLBoolean,
-  GraphQLDirective,
-  GraphQLEnumType,
-  GraphQLInt,
-} from 'graphql';
 
 import { RecipesModule } from './recipes/recipes.module';
 
@@ -24,32 +17,6 @@ import { RecipesModule } from './recipes/recipes.module';
       sortSchema: true,
       driver: ApolloFederationDriver,
       plugins: [responseCachePlugin()],
-      buildSchemaOptions: {
-        directives: [
-          new GraphQLDirective({
-            name: 'cacheControl',
-            locations: [
-              DirectiveLocation.FIELD_DEFINITION,
-              DirectiveLocation.OBJECT,
-              DirectiveLocation.INTERFACE,
-              DirectiveLocation.UNION,
-            ],
-            args: {
-              maxAge: { type: GraphQLInt },
-              scope: {
-                type: new GraphQLEnumType({
-                  name: 'CacheControlScope',
-                  values: {
-                    PUBLIC: {},
-                    PRIVATE: {},
-                  },
-                }),
-              },
-              inheritMaxAge: { type: GraphQLBoolean },
-            },
-          }),
-        ],
-      },
     }),
     RecipesModule,
   ],
